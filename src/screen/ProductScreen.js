@@ -5,7 +5,7 @@ import {
   cartAddStart,
   fetchProduct,
   fetchProductStart,
-} from '../redux/actions';
+} from '../redux/mainRedux/actions';
 import { useNavigate } from 'react-router-dom';
 import {
   Badge,

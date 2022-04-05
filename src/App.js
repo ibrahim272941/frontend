@@ -10,8 +10,9 @@ import CartScreen from './screen/CartScreen';
 import SigninScreen from './screen/SigninScreen';
 
 function App() {
-  const { cart } = useSelector((state) => state);
-
+  const { cart } = useSelector((state) => state.main);
+  const state = useSelector((state) => state.main);
+  console.log(state);
   return (
     <Router>
       <div className="d-flex flex-column site-contianer">

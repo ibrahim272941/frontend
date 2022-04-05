@@ -12,7 +12,7 @@ const initialValue = {
   },
 };
 
-const reducer = (state = initialValue, action) => {
+const mainReducer = (state = initialValue, action) => {
   switch (action.type) {
     case types.FETCH_REQUEST:
       return {
@@ -91,4 +91,4 @@ const reducer = (state = initialValue, action) => {
       return state;
   }
 };
-export default reducer;
+export default mainReducer;

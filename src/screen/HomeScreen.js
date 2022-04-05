@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchStart } from '../redux/actions';
+import { fetchStart } from '../redux/mainRedux/actions';
 import { Col, Row } from 'react-bootstrap';
 import Product from '../component/Product';
 import { Helmet } from 'react-helmet-async';
 import LoadingBox from '../component/LoadingBox';
 
 const HomeScreen = () => {
-  const { products } = useSelector((state) => state);
+  const { products } = useSelector((state) => state.main);
   const dispatch = useDispatch();
 
   // console.log(Object.keys(products).map((item) => item));
@@ -17,7 +17,7 @@ const HomeScreen = () => {
   useEffect(() => {
     dispatch(fetchStart());
   }, [dispatch]);
-
+  console.log(products);
   return (
     <div>
       <Helmet>

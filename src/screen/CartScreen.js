@@ -11,7 +11,7 @@ import {
 import { Helmet } from 'react-helmet-async';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { cartAddStart, cartRemoveStart } from '../redux/actions';
+import { cartAddStart, cartRemoveStart } from '../redux/mainRedux/actions';
 import { useNavigate } from 'react-router-dom';
 
 const CartScreen = () => {

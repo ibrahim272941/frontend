@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { takeLatest, all, put, fork, call } from 'redux-saga/effects';
-import { database } from '../firebase/firebaseConfig';
+import { auth, database } from '../firebase/firebaseConfig';
 import {
   onValue,
   push,
@@ -19,8 +19,11 @@ import {
   cartRemoveStart,
   cartRemoveSuccess,
   fetchProductSucces,
-} from './actions';
-import * as types from './actionTypes';
+} from './mainRedux/actions';
+import * as types from './mainRedux/actionTypes';
+import * as type from './authRedux/actionTypes';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { registerFail, registerSucces } from './authRedux/actions';
 
 export function* fetchDataAsync() {
   try {
@@ -85,11 +88,30 @@ export function* cardRemoveItemAsync({ payload }) {
 export function* onCardRemoveItem() {
   yield takeLatest(types.CARD_REMOVE_ITEM_START, cardRemoveItemAsync);
 }
+
+export function* registerAsync({ payload }) {
+  try {
+    const { name, email, password } = payload;
+    yield createUserWithEmailAndPassword(auth, email, password).ther(
+      ({ user }) => {
+        updateProfile(user, { name });
+        registerSucces(auth, user);
+      }
+    );
+  } catch (error) {
+    registerFail(error);
+  }
+}
+
+export function* onRegister() {
+  yield takeLatest(type.REGISTER_START, registerAsync);
+}
 const productSaga = [
   fork(onFetchData),
   fork(onFetchProductData),
   fork(onAddToCart),
   fork(onCardRemoveItem),
+  fork(onRegister),
 ];
 export default function* rootSaga() {
   yield all([...productSaga]);
