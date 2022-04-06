@@ -2,7 +2,11 @@ import { Container, Form, Button } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react';
-import { registerFunc, registerStart } from '../redux/authRedux/actions';
+import {
+  loginFunc,
+  registerFunc,
+  registerStart,
+} from '../redux/authRedux/actions';
 import { useDispatch } from 'react-redux';
 
 const initialValue = {
@@ -10,7 +14,7 @@ const initialValue = {
   email: '',
   password: '',
 };
-const SigninScreen = () => {
+const LoginScreen = () => {
   const { search } = useLocation();
   const redirectUrl = new URLSearchParams(search).get('redirect');
   const [userData, setUserData] = useState(initialValue);
@@ -19,7 +23,6 @@ const SigninScreen = () => {
   const navigate = useNavigate();
 
   const redirect = redirectUrl ? redirectUrl : '/';
-
   const handleChange = (e) => {
     e.preventDefault();
     let { name, value } = e.target;
@@ -30,28 +33,17 @@ const SigninScreen = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(registerFunc(userData));
-    // dispatch(registerStart(userData));
+    dispatch(loginFunc(userData));
+
     navigate(redirect || '/');
   };
   return (
     <Container className="small-container">
       <Helmet>
-        <title>Sign In</title>
+        <title>Login In</title>
       </Helmet>
-      <h3 className="my-3 text-center">Sign In</h3>
+      <h3 className="my-3 text-center">Login In</h3>
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="name">
-          <Form.Label>Full Name</Form.Label>
-          <Form.Control
-            onChange={handleChange}
-            name="displayName"
-            value={displayName}
-            type="text"
-            placeholder="Enter Your Name"
-            required
-          />
-        </Form.Group>
         <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email</Form.Label>
           <Form.Control
@@ -83,14 +75,15 @@ const SigninScreen = () => {
             type="submit"
             size="lg"
           >
-            Sign In
+            Login In
           </Button>
         </div>
         <div className="mb-3 text-center">
-          <Link to={`/login`}>Do you have you a account </Link>
+          New Costumer
+          <Link to={`/signin?redirect=${redirect}`}>Create your account</Link>
         </div>
       </Form>
     </Container>
   );
 };
-export default SigninScreen;
+export default LoginScreen;

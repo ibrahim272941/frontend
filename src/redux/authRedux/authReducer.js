@@ -1,7 +1,7 @@
 import * as types from './actionTypes';
 
 const initalValue = {
-  user: [],
+  currentUser: null,
   loading: false,
   error: null,
 };
@@ -13,7 +13,7 @@ const authReducer = (state = initalValue, action) => {
     case types.REGISTER_SUCCESS:
       return {
         ...state,
-        user: action.payload,
+        currentUser: action.payload,
         loading: false,
       };
     case types.REGISTER_FAIL:

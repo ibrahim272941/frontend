@@ -8,10 +8,11 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector } from 'react-redux';
 import CartScreen from './screen/CartScreen';
 import SigninScreen from './screen/SigninScreen';
+import LoginScreen from './screen/LoginScreen';
 
 function App() {
   const { cart } = useSelector((state) => state.main);
-  const state = useSelector((state) => state.main);
+  const state = useSelector((state) => state.user);
   console.log(state);
   return (
     <Router>
@@ -42,6 +43,7 @@ function App() {
               <Route path="/" element={<HomeScreen />} />
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/signin" element={<SigninScreen />} />
+              <Route path="/login" element={<LoginScreen />} />
             </Routes>
           </Container>
         </main>

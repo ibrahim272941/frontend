@@ -92,14 +92,15 @@ export function* onCardRemoveItem() {
 export function* registerAsync({ payload }) {
   try {
     const { name, email, password } = payload;
-    yield createUserWithEmailAndPassword(auth, email, password).ther(
+
+    yield createUserWithEmailAndPassword(auth, email, password).then(
       ({ user }) => {
-        updateProfile(user, { name });
-        registerSucces(auth, user);
+        updateProfile(user, { name }).then(registerSucces(auth));
       }
     );
+    // yield put(registerSucces(auth, userData));
   } catch (error) {
-    registerFail(error);
+    yield put(registerFail(error));
   }
 }
 
