@@ -19,6 +19,8 @@ import {
   cartRemoveStart,
   cartRemoveSuccess,
   fetchProductSucces,
+  saleSuccess,
+  saleFail,
 } from './mainRedux/actions';
 import * as types from './mainRedux/actionTypes';
 import * as type from './authRedux/actionTypes';
@@ -89,30 +91,52 @@ export function* onCardRemoveItem() {
   yield takeLatest(types.CARD_REMOVE_ITEM_START, cardRemoveItemAsync);
 }
 
-export function* registerAsync({ payload }) {
-  try {
-    const { name, email, password } = payload;
+// export function* registerAsync({ payload }) {
+//   try {
+//     const { name, email, password } = payload;
 
-    yield createUserWithEmailAndPassword(auth, email, password).then(
-      ({ user }) => {
-        updateProfile(user, { name }).then(registerSucces(auth));
-      }
-    );
-    // yield put(registerSucces(auth, userData));
+//     yield createUserWithEmailAndPassword(auth, email, password).then(
+//       ({ user }) => {
+//         updateProfile(user, { name }).then(registerSucces(auth));
+//       }
+//     );
+//     yield put(registerSucces(auth, userData));
+//   } catch (error) {
+//     yield put(registerFail(error));
+//   }
+// }
+
+// export function* onRegister() {
+//   yield takeLatest(type.REGISTER_START, registerAsync);
+// }
+export function* onSaleAsync({ payload }) {
+  console.log(payload);
+  try {
+    const { cartItems, localId } = payload;
+    const userRef = ref(database, `/costumers`);
+    const newUserRef = push(userRef);
+    set(newUserRef, cartItems);
+    const sale = {
+      user: localId,
+      cart: cartItems.map((item) => item),
+      date: new Date().toLocaleString(),
+    };
+    yield set(userRef, sale);
+
+    yield put(cartRemoveStart(cartItems));
   } catch (error) {
-    yield put(registerFail(error));
+    yield put(saleFail(error));
   }
 }
-
-export function* onRegister() {
-  yield takeLatest(type.REGISTER_START, registerAsync);
+export function* onSale() {
+  yield takeLatest(types.SALE_START, onSaleAsync);
 }
 const productSaga = [
   fork(onFetchData),
   fork(onFetchProductData),
   fork(onAddToCart),
   fork(onCardRemoveItem),
-  fork(onRegister),
+  fork(onSale),
 ];
 export default function* rootSaga() {
   yield all([...productSaga]);

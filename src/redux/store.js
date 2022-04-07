@@ -7,27 +7,27 @@ import thunk from 'redux-thunk';
 
 const sagaMiddleWare = createSagaMiddleware();
 const middleWare = [sagaMiddleWare, thunk];
-// let store;
-const store = createStore(
-  rootReducer,
-  compose(
-    applyMiddleware(...middleWare),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
-);
+let store;
+// const store = createStore(
+//   rootReducer,
+//   compose(
+//     applyMiddleware(...middleWare),
+//     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+//   )
+// );
 
-// if (process.env.NODE_ENV === 'development') {
-//   store = createStore(
-//     reducer,
-//     compose(
-//       applyMiddleware(sagaMiddleWare),
-//       window.__REDUX_DEVTOOLS_EXTENSION__ &&
-//         window.__REDUX_DEVTOOLS_EXTENSION__()
-//     )
-//   );
-// } else {
-//   store = createStore(reducer, applyMiddleware(sagaMiddleWare));
-// }
+if (process.env.NODE_ENV === 'development') {
+  store = createStore(
+    rootReducer,
+    compose(
+      applyMiddleware(...middleWare),
+      window.__REDUX_DEVTOOLS_EXTENSION__ &&
+        window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
+  );
+} else {
+  store = createStore(rootReducer, applyMiddleware(sagaMiddleWare));
+}
 
 sagaMiddleWare.run(rootSaga);
 

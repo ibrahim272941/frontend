@@ -42,3 +42,18 @@ export const cartRemoveSuccess = (item) => ({
   type: types.CARD_REMOVE_ITEM_SUCCESS,
   payload: item,
 });
+
+export const saleStart = (cartItems, localId) => ({
+  type: types.SALE_START,
+  payload: { cartItems, localId },
+});
+
+export const saleSuccess = (sale) => ({
+  type: types.SALE_SUCCESS,
+  payload: sale,
+});
+
+export const saleFail = (error) => ({
+  type: types.SALE_FAIL,
+  payload: error,
+});

@@ -20,17 +20,22 @@ export const registerFail = (error) => ({
   type: types.REGISTER_FAIL,
   payload: error,
 });
-const loginStart = () => ({
+export const loginStart = () => ({
   type: types.LOGIN_START,
 });
-const loginSuccess = (user) => ({
+export const loginSuccess = (user) => ({
   type: types.LOGIN_SUCCESS,
   payload: user,
 });
-const loginFail = (error) => ({
+export const loginFail = (error) => ({
   type: types.LOGIN_FAIL,
   payload: error,
 });
+export const persistUser = (user) => ({
+  type: types.PERSIST_USER,
+  payload: user,
+});
+
 export const registerFunc = (userData) => {
   console.log(userData);
   return function (dispatch) {

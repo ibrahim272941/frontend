@@ -10,6 +10,8 @@ const initialValue = {
     cartAddLoading: false,
     cartAddError: null,
   },
+  saleProduct: [],
+  saleProductError: null,
 };
 
 const mainReducer = (state = initialValue, action) => {
@@ -86,7 +88,20 @@ const mainReducer = (state = initialValue, action) => {
           cartItems: filteredItem,
         },
       };
-
+    case types.SALE_START:
+      return {
+        ...state,
+      };
+    case types.SALE_SUCCESS:
+      return {
+        ...state,
+        saleProduct: action.payload,
+      };
+    case types.SALE_FAIL:
+      return {
+        ...state,
+        saleProductError: action.payload,
+      };
     default:
       return state;
   }

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import {
   Col,
   ListGroup,
@@ -11,14 +11,22 @@ import {
 import { Helmet } from 'react-helmet-async';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { cartAddStart, cartRemoveStart } from '../redux/mainRedux/actions';
+import {
+  cartAddStart,
+  cartRemoveStart,
+  saleStart,
+} from '../redux/mainRedux/actions';
 import { useNavigate } from 'react-router-dom';
 
 const CartScreen = () => {
   const {
     cart: { cartItems },
   } = useSelector((state) => state.main);
+  const {
+    reloadUserInfo: { localId },
+  } = useSelector((state) => state.user.currentUser);
   const navigate = useNavigate();
+
   useEffect(() => {}, []);
   const dispatch = useDispatch();
   const updateCartHandler = async (item, quantity) => {
@@ -31,13 +39,18 @@ const CartScreen = () => {
       return;
     }
     dispatch(cartAddStart({ ...item, quantity }));
-    console.log(data);
   };
+
   const removeItemHanlder = (item) => {
     dispatch(cartRemoveStart(item));
   };
   const checkOutHandler = () => {
-    navigate('/signin?redirect=/shipping');
+    if (localId) {
+      dispatch(saleStart(cartItems, localId));
+    } else {
+      navigate('/signin?redirect=/shipping');
+    }
+    // navigate('/signin?redirect=/shipping');
   };
   return (
     <div>
