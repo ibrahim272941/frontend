@@ -25,6 +25,7 @@ const CartScreen = () => {
   } = useSelector((state) => state.main);
   const {
     reloadUserInfo: { localId },
+    displayName,
   } = useSelector((state) => state.user.currentUser);
   const navigate = useNavigate();
 
@@ -54,7 +55,7 @@ const CartScreen = () => {
   };
   const checkOutHandler = () => {
     if (localId) {
-      dispatch(saleStart(cartItems, localId));
+      dispatch(saleStart(cartItems, displayName));
     } else {
       navigate('/signin?redirect=/shipping');
     }
