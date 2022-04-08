@@ -37,7 +37,7 @@ main {
 }
 
 .product img {
-  width: 100%;
+  width: 90%;
   max-width: 400px;
 }
 
@@ -55,4 +55,9 @@ main {
 
 .card-img-top {
   height: 11rem;
+}
+
+.product-card {
+  height: 25rem;
+  padding: 2rem;
 }

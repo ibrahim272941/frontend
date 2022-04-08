@@ -54,14 +54,15 @@ const mainReducer = (state = initialValue, action) => {
     case types.CARD_ADD_ITEM_SUCCESS:
       const newItem = action.payload;
       const existItem = state.cart.cartItems.find(
-        (item) => item._id === newItem._id
+        (item) => item.productTitle === newItem.productTitle
       );
-
+      console.log(state.cart.cartItems);
       const cartItems = existItem
         ? state.cart.cartItems.map((item) =>
-            item._id === existItem._id ? newItem : item
+            item.productTitle === existItem.productTitle ? newItem : item
           )
         : [...state.cart.cartItems, newItem];
+
       return {
         ...state,
         cart: {
@@ -77,7 +78,7 @@ const mainReducer = (state = initialValue, action) => {
       };
     case types.CARD_REMOVE_ITEM_START:
       const filteredItem = state.cart.cartItems.filter(
-        (item) => item._id !== action.payload._id
+        (item) => item.productTitle !== action.payload.productTitle
       );
 
       return {

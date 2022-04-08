@@ -19,6 +19,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 const CartScreen = () => {
+  const { products } = useSelector((state) => state.main);
   const {
     cart: { cartItems },
   } = useSelector((state) => state.main);
@@ -30,14 +31,21 @@ const CartScreen = () => {
   useEffect(() => {}, []);
   const dispatch = useDispatch();
   const updateCartHandler = async (item, quantity) => {
-    const { data } = await axios.get(`/api/products/${item._id}`);
-    if (data.countInStock < quantity) {
-      window.alert('This Product is out of stock');
-      return;
-    } else if (quantity < 0) {
-      window.alert('Quantity cannot be 0');
-      return;
-    }
+    // const { data } = await axios.get(`/api/products/${item._id}`);
+    Object.values(products).map((prod) => {
+      if (prod.productTitle === item.productTitle) {
+        if (prod.quantity < quantity) {
+          window.alert('This Product is out of stock');
+        } else if (prod.quantity === 0 || quantity <= 0) {
+          window.alert('Quantity cannot be 0');
+        }
+      }
+    });
+    // if (data.countInStock < quantity) {
+    // } else if (quantity < 0) {
+    //
+    //   return;
+    // }
     dispatch(cartAddStart({ ...item, quantity }));
   };
 
@@ -67,9 +75,9 @@ const CartScreen = () => {
             </div>
           ) : (
             <ListGroup>
-              {cartItems.map((item) => {
+              {cartItems.map((item, i) => {
                 return (
-                  <ListGroupItem key={item._id}>
+                  <ListGroupItem key={i}>
                     <Row className="align-items-center">
                       <Col md={5}>
                         <img
@@ -87,7 +95,7 @@ const CartScreen = () => {
                       <Col md={3}>
                         <Button
                           variant="light"
-                          disable={item.quantity === 0 ? true : false}
+                          disable={item.quantity === 0 ? true : undefined}
                           onClick={() => {
                             updateCartHandler(item, item.quantity - 1);
                           }}
