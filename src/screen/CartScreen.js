@@ -55,11 +55,10 @@ const CartScreen = () => {
   };
   const checkOutHandler = () => {
     if (localId) {
-      dispatch(saleStart(cartItems, displayName));
+      navigate('/shipping');
     } else {
       navigate('/signin?redirect=/shipping');
     }
-    // navigate('/signin?redirect=/shipping');
   };
   return (
     <div>

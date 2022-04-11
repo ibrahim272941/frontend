@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase/firebaseConfig';
 import { persistUser } from './redux/authRedux/actions';
+import ShippinScreen from './screen/ShippinScreen';
 
 function App() {
   const dispatch = useDispatch();
@@ -82,6 +83,7 @@ function App() {
               <Route path="/" element={<HomeScreen />} />
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/signin" element={<SigninScreen />} />
+              <Route path="shipping" element={<ShippinScreen />} />
               <Route path="/login" element={<LoginScreen />} />
             </Routes>
           </Container>
