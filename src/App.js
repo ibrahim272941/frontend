@@ -12,7 +12,7 @@ import LoginScreen from './screen/LoginScreen';
 import { useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase/firebaseConfig';
-import { persistUser } from './redux/authRedux/actions';
+import { logoutFunc, persistUser } from './redux/authRedux/actions';
 import ShippinScreen from './screen/ShippinScreen';
 
 function App() {
@@ -28,7 +28,11 @@ function App() {
         dispatch(persistUser(null));
       }
     });
-  }, [dispatch, currentUser]);
+  }, [dispatch]);
+
+  const signOutHandler = () => {
+    dispatch(logoutFunc());
+  };
   return (
     <Router>
       <div className="d-flex flex-column site-contianer">
@@ -49,7 +53,11 @@ function App() {
                 </Link>
                 {currentUser ? (
                   <NavDropdown
-                    title={currentUser.displayName}
+                    title={
+                      currentUser.displayName === null
+                        ? 'currentUser'
+                        : currentUser.displayName
+                    }
                     id="basic-nav-dropdown"
                   >
                     <LinkContainer to="/profile">
@@ -61,16 +69,18 @@ function App() {
                     <NavDropdown.Divider />
                     <Link
                       className="dropdown-item"
-                      to="#signout"
-                      // onClick={signOutHandler}
+                      to="/"
+                      onClick={signOutHandler}
                     >
                       Sign Out
                     </Link>
                   </NavDropdown>
                 ) : (
-                  <Link className="nav-link" to="/signin">
-                    Sign In
-                  </Link>
+                  <div>
+                    <Link className="nav-link" to="/signin">
+                      Sign In
+                    </Link>
+                  </div>
                 )}
               </Nav>
             </Container>

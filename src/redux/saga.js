@@ -112,20 +112,15 @@ export function* onCardRemoveItem() {
 export function* onSaleAsync({ payload }) {
   console.log(payload);
   try {
-    const { cartItems, localId } = payload;
     const userRef = ref(database, `/costumers`);
     const newUserRef = push(userRef);
-    set(newUserRef, cartItems);
-    const sale = {
-      user: localId,
-      cart: cartItems.map((item) => item),
-      date: new Date().toLocaleString(),
-    };
-    yield set(userRef, sale);
+    // set(userRef, payload);
 
-    yield put(cartRemoveStart(cartItems));
+    yield set(newUserRef, payload);
+
+    //yield put(cartRemoveStart(cartItems));
   } catch (error) {
-    yield put(saleFail(error));
+    yield put(saleFail(error.message));
   }
 }
 export function* onSale() {

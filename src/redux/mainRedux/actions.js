@@ -7,6 +7,10 @@ export const fetchSuccess = (products) => ({
   type: types.FETCH_SUCCESS,
   payload: products,
 });
+export const fetchFail = (error) => ({
+  type: types.FETCH_FAIL,
+  payload: error,
+});
 export const fetchProductStart = (slug) => ({
   type: types.FETCH_PRODUCT_START,
   payload: slug,
@@ -14,10 +18,6 @@ export const fetchProductStart = (slug) => ({
 export const fetchProductSucces = (slug) => ({
   type: types.FETCH_PRODUCT_SUCCESS,
   payload: slug,
-});
-export const fetchFail = (error) => ({
-  type: types.FETCH_FAIL,
-  payload: error,
 });
 
 export const cartAddStart = (product) => ({
@@ -43,9 +43,9 @@ export const cartRemoveSuccess = (item) => ({
   payload: item,
 });
 
-export const saleStart = (cartItems, localId) => ({
+export const saleStart = (costumerData) => ({
   type: types.SALE_START,
-  payload: { cartItems, localId },
+  payload: costumerData,
 });
 
 export const saleSuccess = (sale) => ({
