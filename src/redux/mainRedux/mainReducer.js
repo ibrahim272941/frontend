@@ -6,7 +6,9 @@ const initialValue = {
   loading: false,
   error: null,
   cart: {
-    cartItems: [],
+    cartItems: localStorage.getItem('cart')
+      ? JSON.parse(localStorage.getItem('cart'))
+      : [],
     cartAddLoading: false,
     cartAddError: null,
   },
@@ -102,6 +104,12 @@ const mainReducer = (state = initialValue, action) => {
       return {
         ...state,
         saleProductError: action.payload,
+      };
+
+    case types.CART_REMOVE_SUCCESS:
+      return {
+        ...state,
+        cart: { ...state.cart, cartItems: [] },
       };
     default:
       return state;

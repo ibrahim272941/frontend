@@ -119,7 +119,7 @@ export function* onSaleAsync({ payload }) {
 
     yield set(newUserRef, payload);
 
-    yield put(cartRemoveStart(cart));
+    //yield put(cartRemoveStart(cart));
   } catch (error) {
     yield put(saleFail(error.message));
   }

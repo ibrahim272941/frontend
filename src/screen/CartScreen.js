@@ -42,12 +42,8 @@ const CartScreen = () => {
 
     dispatch(cartAddStart({ ...item, quantity }));
   };
-  const cartLocal = localStorage.getItem('cart');
-  localStorage.setItem('cart', JSON.stringify(cartItems));
-  if (cartLocal && Array.isArray(cartLocal)) {
-    cartLocal.push(cartItems);
-  }
 
+  localStorage.setItem('cart', JSON.stringify(cartItems));
   const removeItemHanlder = (item) => {
     dispatch(cartRemoveStart(item));
   };

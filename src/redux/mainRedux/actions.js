@@ -57,3 +57,7 @@ export const saleFail = (error) => ({
   type: types.SALE_FAIL,
   payload: error,
 });
+
+export const cartRemoveCompletelySuccess = () => ({
+  type: types.CART_REMOVE_SUCCESS,
+});

@@ -4,7 +4,11 @@ import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import LoadingBox from '../component/LoadingBox';
-import { saleStart } from '../redux/mainRedux/actions';
+import {
+  cartRemoveCompletelySuccess,
+  cartRemoveStart,
+  saleStart,
+} from '../redux/mainRedux/actions';
 
 const initialValue = {
   fullName: '',
@@ -44,7 +48,7 @@ const ShippinScreen = () => {
     };
 
     dispatch(saleStart(costumerData));
-
+    dispatch(cartRemoveCompletelySuccess());
     navigate('/');
   };
   const handleChange = (e) => {
