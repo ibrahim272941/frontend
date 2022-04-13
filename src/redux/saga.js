@@ -111,6 +111,7 @@ export function* onCardRemoveItem() {
 // }
 export function* onSaleAsync({ payload }) {
   console.log(payload);
+  const { cart } = payload;
   try {
     const userRef = ref(database, `/costumers`);
     const newUserRef = push(userRef);
@@ -118,7 +119,7 @@ export function* onSaleAsync({ payload }) {
 
     yield set(newUserRef, payload);
 
-    //yield put(cartRemoveStart(cartItems));
+    yield put(cartRemoveStart(cart));
   } catch (error) {
     yield put(saleFail(error.message));
   }

@@ -39,13 +39,14 @@ const CartScreen = () => {
         }
       }
     });
-    // if (data.countInStock < quantity) {
-    // } else if (quantity < 0) {
-    //
-    //   return;
-    // }
+
     dispatch(cartAddStart({ ...item, quantity }));
   };
+  const cartLocal = localStorage.getItem('cart');
+  localStorage.setItem('cart', JSON.stringify(cartItems));
+  if (cartLocal && Array.isArray(cartLocal)) {
+    cartLocal.push(cartItems);
+  }
 
   const removeItemHanlder = (item) => {
     dispatch(cartRemoveStart(item));
